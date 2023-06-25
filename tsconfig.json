@@ -1,0 +1,16 @@
+{
+  "extends": "@eggjs/tsconfig",
+  "compilerOptions": {
+    "ignoreDeprecations": "5.0",
+    "declaration": false,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "lib/*"
+      ],
+      "@c/*": [
+        "config/*"
+      ]
+    },
+  }
+}

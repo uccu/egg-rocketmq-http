@@ -1,0 +1,62 @@
+{
+  "name": "egg-rocketmq-http",
+  "version": "1.2.0",
+  "description": "provides egg bindings for the rocketmq.",
+  "eggPlugin": {
+    "name": "rocketMQ"
+  },
+  "keywords": [
+    "egg",
+    "mq",
+    "rocketmq",
+    "egg-rocketmq-http",
+    "egg-plugin"
+  ],
+  "dependencies": {
+    "@aliyunmq/mq-http-sdk": "^1.0.4",
+    "lodash": "^4.17.21"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "tsc -b --clean",
+    "ci": "egg-bin pkgfiles --check && npm run lint",
+    "lint": "eslint .",
+    "pkgfiles": "egg-bin pkgfiles",
+    "dev": "egg-bin dev"
+  },
+  "devDependencies": {
+    "@eggjs/tsconfig": "1",
+    "@types/lodash": "^4.14.195",
+    "@types/mocha": "^10.0.1",
+    "egg": "^3",
+    "egg-bin": "^5",
+    "egg-ci": "^2",
+    "egg-mock": "^5",
+    "eslint": "^8",
+    "eslint-config-egg": "^12",
+    "mocha": "^10.2.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "files": [
+    "config",
+    "app/extends",
+    "lib",
+    "*.js",
+    "*.ts"
+  ],
+  "ci": {
+    "version": "14, 16, 18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uccu/egg-rocketmq-http.git"
+  },
+  "bugs": {
+    "url": "https://github.com/uccu/egg-rocketmq-http/issues"
+  },
+  "homepage": "https://github.com/uccu/egg-rocketmq-http#README",
+  "author": "cat@4moe.com",
+  "license": "MIT"
+}

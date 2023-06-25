@@ -1,0 +1,15 @@
+{
+    "extends": "eslint-config-egg/typescript",
+    "parserOptions": {
+      "project": "./tsconfig.json"
+    },
+    "globals": {
+      "NormalException": "readonly"
+    },
+    "rules": {
+      "@typescript-eslint/no-var-requires": 0,
+      "no-var": 0,
+      "no-bitwise": 0,
+      "no-constant-condition": 0
+    }
+  }
