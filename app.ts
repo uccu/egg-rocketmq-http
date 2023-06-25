@@ -30,7 +30,7 @@ export default class FooBoot implements IBoot {
       }
 
       // 首字母小写处理
-      const tag = lowerFirst(message.MessageTag);
+      const tag = lowerFirst(message.MessageTag.split('-')[0]);
 
       if (!isFunction(cla[tag])) {
         this.app.getLogger('mqFailedLogger').warn('[mq-consume] MQ执行类没有对应处理tag方法: %s, %s', consumer, tag);
