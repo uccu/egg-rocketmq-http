@@ -1,4 +1,5 @@
 import { Agent, IBoot } from 'egg';
+import { MessageProperties } from '@aliyunmq/mq-http-sdk';
 export default class FooBoot implements IBoot {
 
   app: Agent;
@@ -9,19 +10,25 @@ export default class FooBoot implements IBoot {
 
   async didLoad() {
     this.app.mq.init();
-    this.app.messenger.on('mq-publish', async ({ body, tag, props }) => {
+    this.app.messenger.on('mq-publish', async ({ body, tag, key }) => {
       const producer = this.app.mq.getProducer(this.app.config.mq.topic);
-      const ret = await producer.publishMessage(body, tag, props);
+
+      if (key) {
+        key = new MessageProperties();
+        key.messageKey(key);
+      }
+
+      const ret = await producer.publishMessage(body, tag, key);
       if (ret.code !== 201) {
         this.app.getLogger('mqFailedLogger').warn(
           '[mq-publish] tag: %s, props: %s, body: %s, ret: %s',
-          tag, JSON.stringify(props), body, JSON.stringify(ret),
+          tag, JSON.stringify(key), body, JSON.stringify(ret),
         );
       }
       if (this.app.config.mq.log) {
         this.app.getLogger('mqLogger').info(
           '[mq-publish] tag: %s, props: %s, body: %s, ret: %s',
-          tag, JSON.stringify(props), body, JSON.stringify(ret),
+          tag, JSON.stringify(key), body, JSON.stringify(ret),
         );
       }
     });

@@ -9,8 +9,13 @@ declare module '@aliyunmq/mq-http-sdk' {
     getConsumer(instanceId: string, topic: string, consumer: string, messageTag: string): MQConsumer;
   }
 
+  class MessageProperties {
+    messageKey(key:string): void;
+    getProperties(): object;
+  }
+
   interface MQProducer {
-    publishMessage(body: unknown, tag: string, msgProps?: Record<string, unknown>): Promise<{
+    publishMessage(body: unknown, tag: string, msgProps?: MessageProperties): Promise<{
       code: number;
       requestId: string;
       body: {

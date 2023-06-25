@@ -260,8 +260,8 @@ export class MQ {
   }
 
 
-  publish(body: any, tag = '', props = null) {
-    this.app.messenger.sendToAgent('mq-publish', { body, tag, props });
+  publish(body: any, tag = '', key = null) {
+    this.app.messenger.sendToAgent('mq-publish', { body, tag, key });
   }
 
 }
