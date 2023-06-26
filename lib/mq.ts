@@ -1,6 +1,6 @@
 import { Application, Context, EggAppConfig, EggApplication } from 'egg';
 import { MQClient, MQProducer, MQConsumer } from '@aliyunmq/mq-http-sdk';
-import { ConsumerConfig } from '@c/config.default';
+import { ConsumerConfig } from '../config/config.default';
 
 
 class EMQConsumer {

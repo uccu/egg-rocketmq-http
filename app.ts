@@ -1,4 +1,4 @@
-import { Message } from '@/mq';
+import { Message } from './lib/mq';
 import { Application, IBoot } from 'egg';
 import { lowerFirst, isFunction } from 'lodash';
 import path from 'path';

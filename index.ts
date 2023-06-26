@@ -1,5 +1,5 @@
-import { MQ, Message, Consumer } from '@/mq';
-import de from '@c/config.default';
+import { MQ, Message, Consumer } from './lib/mq';
+import de from './config/config.default';
 
 declare module 'egg' {
   interface EggApplication {
