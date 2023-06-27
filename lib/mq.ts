@@ -10,7 +10,7 @@ class EMQConsumer {
   config: ConsumerConfig;
   app: EggApplication;
 
-  constructor(app: EggApplication, consumer: MQConsumer, config: ConsumerConfig) {
+  constructor(app, consumer: MQConsumer, config: ConsumerConfig) {
     this._c = consumer;
     this.acks = new Set();
     this.config = config;
