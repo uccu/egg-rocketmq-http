@@ -10,7 +10,7 @@ class EMQConsumer {
   config: ConsumerConfig;
   app: EggApplication;
 
-  constructor(app:EggApplication, consumer:MQConsumer, config:ConsumerConfig) {
+  constructor(app: EggApplication, consumer: MQConsumer, config: ConsumerConfig) {
     this._c = consumer;
     this.acks = new Set();
     this.config = config;
@@ -89,9 +89,11 @@ export interface Message {
   // 消息标签
   MessageTag: string,
 
-  Properties:Record<string, string>,
+  Properties: Record<string, string>,
 
-  MessageKey?:string,
+  MessageKey?: string,
+
+  consumer?: string,
 }
 
 export interface ResponseData {

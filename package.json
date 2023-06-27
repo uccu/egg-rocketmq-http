@@ -1,6 +1,6 @@
 {
   "name": "egg-rocketmq-http",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "provides egg bindings for the rocketmq.",
   "eggPlugin": {
     "name": "rocketMQ"

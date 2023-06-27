@@ -21,13 +21,15 @@ export default class FooBoot implements IBoot {
   async didLoad() {
     this.app.mq.init();
 
-    this.app.messenger.on('mq-consume', async ({ consumer, message }:{consumer: string, message:Message}) => {
+    this.app.messenger.on('mq-consume', async ({ consumer, message }: { consumer: string, message: Message }) => {
       const ctx = this.app.createAnonymousContext();
       const cla = ctx.mq[consumer.replace(/^GID(_|-)/i, '').split('-')[0]];
       if (!cla) {
         this.app.getLogger('mqFailedLogger').warn('[mq-consume] MQ执行类不存在: %s', consumer);
         return;
       }
+
+      message.consumer = consumer;
 
       // 首字母小写处理
       const tag = lowerFirst(message.MessageTag.split('-')[0]);
