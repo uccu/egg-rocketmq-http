@@ -258,6 +258,8 @@ export class MQ {
         // 发送报错邮件
         reportError(this.app, e);
       }
+
+      this._watch(consumer);
     }
   }
 
