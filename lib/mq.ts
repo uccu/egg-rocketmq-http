@@ -133,13 +133,8 @@ export class MQ {
 
   getProducer(topic?: string) {
 
-    if (!topic) {
-      topic = this.config.topic;
-    }
-
-    if (!this.producers[topic]) {
-      this.producers[topic] = this.client.getProducer(this.config.instanceId, topic);
-    }
+    topic ||= this.config.topic;
+    this.producers[topic] ||= this.client.getProducer(this.config.instanceId, topic);
     return this.producers[topic];
   }
 
@@ -264,8 +259,8 @@ export class MQ {
   }
 
 
-  publish(body: any, tag = '', key = null) {
-    this.app.messenger.sendToAgent('mq-publish', { body, tag, key });
+  publish(body: any, tag = '', { key, topic }:{key?: string, topic?: string}) {
+    this.app.messenger.sendToAgent('mq-publish', { body, tag, key, topic });
   }
 
 }

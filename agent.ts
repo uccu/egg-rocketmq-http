@@ -10,8 +10,8 @@ export default class FooBoot implements IBoot {
 
   async didLoad() {
     this.app.mq.init();
-    this.app.messenger.on('mq-publish', async ({ body, tag, key }) => {
-      const producer = this.app.mq.getProducer(this.app.config.mq.topic);
+    this.app.messenger.on('mq-publish', async ({ body, tag, key, topic }) => {
+      const producer = this.app.mq.getProducer(topic || this.app.config.mq.topic);
 
       if (key) {
         key = new MessageProperties();
