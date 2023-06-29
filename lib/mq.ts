@@ -259,7 +259,7 @@ export class MQ {
   }
 
 
-  publish(body: any, tag = '', { key, topic }:{key?: string, topic?: string}) {
+  publish(body: any, tag = '', { key, topic }:{key?: string, topic?: string} = {}) {
     this.app.messenger.sendToAgent('mq-publish', { body, tag, key, topic });
   }
 
