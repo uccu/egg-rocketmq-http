@@ -17,11 +17,15 @@ class EMQConsumer {
     this.app = app;
   }
 
-  consumeMessage() {
-    return this._c.consumeMessage(
+  async consumeMessage() {
+    const res:ResponseData = await this._c.consumeMessage(
       this.config.numOfMessages || 16, // 一次最多消费3条（最多可设置为16条）。
       this.config.waitSeconds || 30, // 长轮询时间3秒（最多可设置为30秒）。
     );
+    if (res.code === 200) {
+      res.body.map(b => this.acks.add(b.ReceiptHandle));
+    }
+    return res;
   }
 
   ackMessage(receiptHandles: string[]) {
@@ -204,7 +208,9 @@ export class MQ {
     try {
       // 长轮询消费消息。
       // 长轮询表示如果Topic没有消息，则客户端请求会在服务端挂起3s，3s内如果有消息可以消费则立即返回响应。
+      logger.debug('开始consumeMessage请求');
       const res: ResponseData = await consumer.consumeMessage();
+      logger.debug('结束consumeMessage请求, 接收到消息数: %d', res.body.length);
 
       if (res.code === 200) {
         // 消息消费处理逻辑。
