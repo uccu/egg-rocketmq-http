@@ -1,6 +1,7 @@
 import { Application, Context, EggAppConfig, EggApplication } from 'egg';
 import { MQClient, MQProducer, MQConsumer } from '@aliyunmq/mq-http-sdk';
 import { ConsumerConfig } from '../config/config.default';
+import { EventEmitter } from 'node:events';
 
 
 class EMQConsumer {
@@ -117,7 +118,7 @@ interface AckResponseData {
   }[]
 }
 
-export class MQ {
+export class MQ extends EventEmitter {
 
   ctx: Context;
   app: Application;
@@ -129,6 +130,7 @@ export class MQ {
   consumers: Record<string, EMQConsumer> = {};
 
   constructor(ctx) {
+    super();
     this.ctx = ctx;
     this.app = ctx.app;
     this.config = this.app.config.mq;
@@ -170,6 +172,7 @@ export class MQ {
 
   async ack(consumer: string, receiptHandles: string[]) {
 
+    // @ts-ignore
     if (this.app.options.type !== 'agent') {
       this.app.messenger.sendToAgent('mq-ack', { consumer, receiptHandles });
       return;
@@ -200,7 +203,6 @@ export class MQ {
   }
 
   async _watch(consumer: EMQConsumer) {
-
 
     const consumerName = consumer.config.consumer;
 
@@ -240,7 +242,6 @@ export class MQ {
           await this.ack(consumerName, handles);
         }
 
-
         consumer.setAckTimeout();
 
       }
@@ -252,12 +253,10 @@ export class MQ {
         logger.error('读到空消息: ' + e.message);
       } else if (e.message && e.message.includes('getaddrinfo ENOTFOUND')) {
         logger.error('网络连接失败: ' + e.message);
-        // 发送报错邮件
-        reportError(this.app, e);
+        this.emit('error', this.app, e);
       } else {
         logger.error(e);
-        // 发送报错邮件
-        reportError(this.app, e);
+        this.emit('error', this.app, e);
       }
 
       this._watch(consumer);
@@ -269,14 +268,4 @@ export class MQ {
     this.app.messenger.sendToAgent('mq-publish', { body, tag, key, topic });
   }
 
-}
-
-
-function reportError(app: Application, err: Error) {
-  const errorText = `错误信息: ${err.name}: ${err.message}\n` +
-    `错误栈: ${err.stack}`;
-
-  if (app.mifenErrorReporter) {
-    app.mifenErrorReporter.reportDirect(app, errorText);
-  }
 }

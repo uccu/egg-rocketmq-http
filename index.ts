@@ -4,12 +4,6 @@ import de from './config/config.default';
 declare module 'egg' {
   interface EggApplication {
     mq: MQ
-    mifenErrorReporter: {
-      reportDirect: any
-    }
-    options: {
-      type: 'agent' | 'application'
-    }
   }
 
   interface EggAppConfig {
