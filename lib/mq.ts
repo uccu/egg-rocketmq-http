@@ -253,10 +253,10 @@ export class MQ extends EventEmitter {
         logger.error('读到空消息: ' + e.message);
       } else if (e.message && e.message.includes('getaddrinfo ENOTFOUND')) {
         logger.error('网络连接失败: ' + e.message);
-        this.emit('error', this.app, e);
+        this.emit('error', e);
       } else {
         logger.error(e);
-        this.emit('error', this.app, e);
+        this.emit('error', e);
       }
 
       this._watch(consumer);
