@@ -12,6 +12,7 @@ declare module '@aliyunmq/mq-http-sdk' {
   class MessageProperties {
     messageKey(key:string): void;
     getProperties(): object;
+    startDeliverTime(number): void;
   }
 
   interface MQProducer {
