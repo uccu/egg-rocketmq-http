@@ -264,8 +264,8 @@ export class MQ extends EventEmitter {
   }
 
 
-  publish(body: any, tag = '', { key, topic }:{key?: string, topic?: string} = {}) {
-    this.app.messenger.sendToAgent('mq-publish', { body, tag, key, topic });
+  publish(body: any, tag = '', { key, topic, deliverTime }:{key?: string, topic?: string, deliverTime?: number} = {}) {
+    this.app.messenger.sendToAgent('mq-publish', { body, tag, key, topic, deliverTime });
   }
 
 }
