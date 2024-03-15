@@ -251,12 +251,15 @@ export class MQ extends EventEmitter {
         logger.debug('Consume Message: no new message, RequestId:%s, Code:%s', e.RequestId, e.Code);
       } else if (e.message && e.message.includes('Cannot read property \'Message\' of undefined')) {
         logger.error('读到空消息: ' + e.message);
+        await new Promise(r => setTimeout(r, 5000));
       } else if (e.message && e.message.includes('getaddrinfo ENOTFOUND')) {
         logger.error('网络连接失败: ' + e.message);
         this.emit('error', e);
+        await new Promise(r => setTimeout(r, 5000));
       } else {
         logger.error(e);
         this.emit('error', e);
+        await new Promise(r => setTimeout(r, 5000));
       }
 
       this._watch(consumer);
