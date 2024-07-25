@@ -147,7 +147,7 @@ export class MQ extends EventEmitter {
   getConsumer(consumer: string) {
     if (!this.consumers[consumer]) {
       const config = this.config.consumers.find(c => c.consumer === consumer) || { consumer, tags: [] };
-      const bconsumer = this.client.getConsumer(this.config.instanceId, this.config.topic, consumer, config.tags?.join('||') || '');
+      const bconsumer = this.client.getConsumer(this.config.instanceId, config.topic || this.config.topic, consumer, config.tags?.join('||') || '');
       this.consumers[consumer] = new EMQConsumer(this.app, bconsumer, config);
     }
     return this.consumers[consumer];

@@ -4,7 +4,7 @@ import path from 'path';
 type ConsumerSendType = 'random' | 'all';
 
 
-export interface ConsumerConfig {
+export type ConsumerConfig = {
   consumer: string
   tags: string[]
   numOfMessages?: number
@@ -12,7 +12,8 @@ export interface ConsumerConfig {
   send?: ConsumerSendType
   sure?: boolean
   consumeWait?: number
-}
+  topic?: string
+};
 
 export default function(appInfo: EggAppInfo) {
 
@@ -26,6 +27,7 @@ export default function(appInfo: EggAppInfo) {
     topic: '',
     consumers: [
       {
+        topic: '',
         consumer: '',
         tags: [ 'test', 'test2' ],
       },
